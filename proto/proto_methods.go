@@ -15,5 +15,16 @@ import (
 const hasProtoMethods = true
 
 func protoMethods(m protoreflect.Message) *protoiface.Methods {
-	return m.ProtoMethods()
+	return conv(m.ProtoMethods())
+}
+
+func conv(i interface{}) *protoiface.Methods {
+	if i == nil {
+		return nil
+	}
+	pm, ok := i.(*protoiface.Methods)
+	if ok {
+		return pm
+	}
+	return nil
 }
